@@ -1,4 +1,5 @@
 import java.util.*;
+import MyUtils.Multiset;
 
 /*
       1) Deque
@@ -11,6 +12,10 @@ import java.util.*;
             |
             |-- Mini Heap or Mini Priority queue
       6) Set
+            |
+            |-- LinkedHashSet
+            |
+            |-- TreeSet
       7) Multi-Set
       8) Unordered Set
 */
@@ -250,33 +255,242 @@ class MiniHeap{
     }
 }
 
+class MySet{
+    Set<String> linkedHashset;
+    Set<String> treeSet;
+
+    MySet(Set<String> linkedHashset, Set<String> treeSet){
+        this.linkedHashset = linkedHashset;
+        this.treeSet = treeSet;
+    }
+
+    void callLinkedHashSet(){
+
+        // Adding Elements
+        linkedHashset.add("apple");
+        linkedHashset.add("banana");
+        linkedHashset.add("cheery");
+        linkedHashset.add("banana");      // avoids the duplicate values
+
+        System.out.println("After adding some elements into set: " + linkedHashset);
+
+        // Removing Elements
+        linkedHashset.remove("banana");
+
+        System.out.println("After deleting banana element from set: " + linkedHashset);
+
+        // Iteration using Iterator
+
+        Iterator<String> iterator = linkedHashset.iterator();
+        while(iterator.hasNext()){
+            String element = iterator.next();
+            if(element.equals("cherry")){
+                iterator.remove();
+            }
+        }
+
+        // adding multiple elements in one shot
+
+        linkedHashset.addAll(Set.of("orange", "grape","lemon"));
+
+        System.out.println("After adding some elements using addAll method: " + linkedHashset);
+
+        boolean hasApple = linkedHashset.contains("apple");
+        boolean hasBanana = linkedHashset.contains(("banana"));
+
+        System.out.println("Contains apple: " + hasApple);
+        System.out.println("Contains banana: " + hasBanana);
+
+        //Size
+        System.out.println("Size of LinkedHashSet before cleanup: " + linkedHashset.size());
+
+        // Cleanup: clear all elements
+
+        linkedHashset.clear();
+
+        // size
+        System.out.println("Size of LinkedHashSet after cleanup: " + linkedHashset.size());
+
+    }
+
+    void callTreeSet(){
+        // Adding Elements
+        treeSet.add("apple");
+        treeSet.add("banana");
+        treeSet.add("cheery");
+        treeSet.add("banana");      // avoids the duplicate values
+
+        System.out.println("After adding some elements into set: " + treeSet);
+
+        // Removing Elements
+        linkedHashset.remove("banana");
+
+        System.out.println("After deleting banana element from set: " + treeSet);
+
+        // Iteration using Iterator
+
+        Iterator<String> iterator = treeSet.iterator();
+        while(iterator.hasNext()){
+            String element = iterator.next();
+            if(element.equals("cherry")){
+                iterator.remove();
+            }
+        }
+
+        // adding multiple elements in one shot
+
+        treeSet.addAll(Set.of("orange", "grape","lemon"));
+
+        System.out.println("After adding some elements using addAll method: " + treeSet);
+
+        boolean hasApple = treeSet.contains("apple");
+        boolean hasBanana = treeSet.contains(("banana"));
+
+        System.out.println("Contains apple: " + hasApple);
+        System.out.println("Contains banana: " + hasBanana);
+
+        //Size
+        System.out.println("Size of TreeSet before cleanup: " + treeSet.size());
+
+        // Cleanup: clear all elements
+
+        treeSet.clear();
+
+        // size
+        System.out.println("Size of TreeSet after cleanup: " + treeSet.size());
+    }
+
+
+}
+
+class MyMultiSet{
+    Multiset<String> myMultiSet;
+
+    MyMultiSet(Multiset<String> myMultiSet){
+        this.myMultiSet = myMultiSet;
+    }
+
+    void callMultiSetMethod(){
+
+
+        // Adding Elements
+        myMultiSet.add("banana");
+        myMultiSet.add("apple");
+        myMultiSet.add("apple");
+        myMultiSet.add("banana", 2);
+        myMultiSet.add("apple", 3);
+        myMultiSet.add("banana", 3);
+
+        System.out.println("After adding Elements: " + myMultiSet.print());
+
+        // Removing elements
+        myMultiSet.remove("apple");
+
+        // Checking counts
+        myMultiSet.remove("apple");
+
+        // Checking counts
+        System.out.println("Count of apples: " + myMultiSet.count("apple"));
+        System.out.println("Count of banana: " + myMultiSet.count("banana"));
+
+        // Iterating over multiset
+        System.out.println("Elements in the multiset:");
+        myMultiSet.elementSet().forEach(element -> System.out.println(element + " x " + myMultiSet.count(element)));
+
+        // Checking if multiSet is empty
+        System.out.println("\nIs multiset empty? " + myMultiSet.isEmpty());
+
+        // Total size of the multiset
+        System.out.println("Total size of multiset: " + myMultiSet.size());
+    }
+}
+
+class MyUnorderedSet{
+    HashSet<Integer> mySet;
+
+    MyUnorderedSet(HashSet<Integer> mySet){
+        this.mySet = mySet;
+    }
+
+    void callUnorderedSetMethod(){
+
+        // insert operation
+        mySet.add(3);
+        mySet.add(4);
+        mySet.add(2);
+        mySet.add(0);
+        mySet.add(3);
+        mySet.add(2);
+        mySet.add(3);
+        // mySet = [0, 2, 3, 4] -> random order and just an example
+
+        System.out.println("After adding elements: " + mySet);
+
+        // Erase operations
+        mySet.remove(2);
+
+        System.out.println("After removing 2 from set: " + mySet);
+
+        // Find operation
+        if(mySet.contains(3)){
+            System.out.println("Found 3");
+        }else{
+            System.out.println("Not Found");
+        }
+
+        // Count operation
+        int count = 0;
+        for(int element: mySet){
+            if(element == 0){
+                count++;
+            }
+        }
+        System.out.println("Count of 0: " + count);
+    }
+}
+
 public class Class3 {
     public static void main(String[] args) {
 
         MyDeque myDeque= new MyDeque(new ArrayDeque<>());     // creating Deque using MyDeque class
         MyList list = new MyList(new LinkedList<>());         // creating LinkedList using MyList class
         MyStack stack = new MyStack(new Stack<>());           // creating Stack using Stack MyStack class
-        MyQueue queue = new MyQueue(new ArrayDeque<>());      // creating queue using Queue, ArrayDeque and MyQueue class
-        MaxHeap maxHeap = new MaxHeap(new PriorityQueue<>(Collections.reverseOrder()), new PriorityQueue<>(Collections.reverseOrder()));        // creating maxHeap using PriorityQueue and MaxHeap class
+        MyQueue queue = new MyQueue(new ArrayDeque<>());      // creating Queue using Queue, ArrayDeque and MyQueue class
+        MaxHeap maxHeap = new MaxHeap(new PriorityQueue<>(Collections.reverseOrder()), new PriorityQueue<>(Collections.reverseOrder()));        // creating MaxHeap using PriorityQueue and MaxHeap class
         MiniHeap miniHeap = new MiniHeap(new PriorityQueue<>(), new PriorityQueue<>());        // creating MiniHeap using PriorityQueue and MiniHeap class
+        MySet set = new MySet(new LinkedHashSet<>(), new TreeSet<String>());   // creating Set using linkedHashSet and treeSet and MySet class
+        MyMultiSet multiset = new MyMultiSet(new Multiset<>());                // Creating multiset using custom class package Multiset
+        MyUnorderedSet unorderedSet = new MyUnorderedSet(new HashSet<>());     // creating unorderedSet using HashSet
 
         //calling deque methods
-//        myDeque.callDequeMethods();
+        myDeque.callDequeMethods();
 
         //calling list methods
-//        list.callingLinkedListMethods();
+        list.callingLinkedListMethods();
 
         //calling stack methods
-//        stack.callStackMethods();
+        stack.callStackMethods();
 
         //calling queue methods
-//        queue.callQueueMethods();
+        queue.callQueueMethods();
 
         //calling MaxHeap Priority Queue
-//        maxHeap.callMaxHeap();
+        maxHeap.callMaxHeap();
 
         //calling MiniHeap Priority Queue
         miniHeap.callMiniHeap();
+
+        //calling LinkedHashSet methods from MySet class
+        set.callLinkedHashSet();
+
+        //calling TreeSet methods from MySet class
+        set.callTreeSet();
+
+        //calling Multiset methods from MyMultiset class
+        multiset.callMultiSetMethod();
+
+        //calling UnorderedSet methods from MyUnordered class
+        unorderedSet.callUnorderedSetMethod();
     }
 }
     
